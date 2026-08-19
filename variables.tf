@@ -8,6 +8,10 @@ variable "security_group" {
     vpc_id                 = string
     vpc_associations       = optional(set(string), [])
     revoke_rules_on_delete = optional(bool, false)
+    timeouts = optional(object({
+     create = optional(string, null)
+     delete = optional(string, null)
+    }), null)
     tags                   = map(string)
 
     ingress = optional(map(object({
@@ -131,3 +135,4 @@ variable "security_group" {
     error_message = "Each rule must specify at least one of cidr_ipv4, cidr_ipv6, prefix_list_id, or referenced_security_group_id."
   }
 }
+
