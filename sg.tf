@@ -12,6 +12,10 @@ resource "aws_security_group" "current" {
   vpc_id                 = var.security_group.vpc_id
   revoke_rules_on_delete = var.security_group.revoke_rules_on_delete
   tags                   = var.security_group.tags
+  timeouts {
+    create = var.security_group.timeouts.create
+    delete = var.security_group.timeouts.delete
+  }
 }
 
 resource "aws_vpc_security_group_ingress_rule" "current" {
