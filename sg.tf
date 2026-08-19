@@ -13,8 +13,8 @@ resource "aws_security_group" "current" {
   revoke_rules_on_delete = var.security_group.revoke_rules_on_delete
   tags                   = var.security_group.tags
   timeouts {
-    create = var.security_group.timeouts.create
-    delete = var.security_group.timeouts.delete
+    create = var.timeouts.create
+    delete = var.timeouts.delete
   }
 }
 
