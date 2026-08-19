@@ -1,6 +1,5 @@
 resource "aws_vpc_security_group_vpc_association" "current" {
-  for_each = var.security_group.vpc_associations
-
+  for_each          = var.security_group.vpc_associations
   security_group_id = aws_security_group.current.id
   vpc_id            = each.value
 }
@@ -12,15 +11,10 @@ resource "aws_security_group" "current" {
   vpc_id                 = var.security_group.vpc_id
   revoke_rules_on_delete = var.security_group.revoke_rules_on_delete
   tags                   = var.security_group.tags
-  timeouts {
-    create = var.timeouts.create
-    delete = var.timeouts.delete
-  }
 }
 
 resource "aws_vpc_security_group_ingress_rule" "current" {
-  for_each = var.security_group.ingress
-
+  for_each                     = var.security_group.ingress
   security_group_id            = aws_security_group.current.id
   description                  = each.value.description
   ip_protocol                  = each.value.ip_protocol
@@ -30,11 +24,11 @@ resource "aws_vpc_security_group_ingress_rule" "current" {
   cidr_ipv6                    = each.value.cidr_ipv6
   prefix_list_id               = each.value.prefix_list_id
   referenced_security_group_id = each.value.referenced_security_group_id
+  tags                         = each.value.tags
 }
 
 resource "aws_vpc_security_group_egress_rule" "current" {
-  for_each = var.security_group.egress
-
+  for_each                     = var.security_group.egress
   security_group_id            = aws_security_group.current.id
   description                  = each.value.description
   ip_protocol                  = each.value.ip_protocol
@@ -44,6 +38,7 @@ resource "aws_vpc_security_group_egress_rule" "current" {
   cidr_ipv6                    = each.value.cidr_ipv6
   prefix_list_id               = each.value.prefix_list_id
   referenced_security_group_id = each.value.referenced_security_group_id
+  tags                         = each.value.tags
 }
 
 resource "aws_vpc_security_group_rules_exclusive" "current" {
